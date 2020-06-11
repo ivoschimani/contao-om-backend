@@ -107,39 +107,30 @@ class BackendLinks extends Backend
     {
         // get all links
         $objLinks = OmBackendLinksMainModel::findBy(['language=?', 'published=1'], [$this->User->language]);
-        if (!$objLinks)
-        {
+        if (!$objLinks) {
             return $strContent;
         }
 
-        foreach ($objLinks as $link)
-        {
+        foreach ($objLinks as $link) {
             $arrGroups[$link->be_group][$link->title] = $link->url;
         }
 
         $strReturn = '';
-        foreach ($arrGroups as $groupName => $group)
-        {
-            $strReturn .= '<li class="tl_level_1_group"><a href="contao/main.php?do=repository_manager&amp;mtg=' . $groupName . '" title="" onclick="return AjaxRequest.toggleNavigation(this,\'' . $groupName . '\')">' . $groupName . '</a></li>';
-            $strReturn .= '<li class="tl_parent" id="' . $groupName . '" style="display: inline;"><ul class="tl_level_2">';
-            foreach ($group as $linkTitle => $link)
-            {
-                if (strpos($link, 'contao?do') !== false)
-                {
+        foreach ($arrGroups as $groupName => $group) {
+            foreach ($group as $linkTitle => $link) {
+                if (strpos($link, 'contao?do') !== false) {
                     $container = \System::getContainer();
                     $strToken = $container->get('security.csrf.token_manager')->getToken($container->getParameter('contao.csrf_token_name'))->getValue();
 
                     $strReturn .= sprintf('<li><a href="%s&rt=%s" class="navigation themes" title="">%s</a></li>', $link, $strToken, $linkTitle);
-                }
-                else
-                {
+                } else {
                     $strReturn .= sprintf('<li><a href="%s" target="_blank" rel="noopener" class="navigation themes" title="">%s</a></li>', $link, $linkTitle);
                 }
             }
-            $strReturn .= '</ul></li>';
         }
 
-        $strContent = str_replace('<ul class="tl_level_1">', '<ul class="tl_level_1">' . $strReturn, $strContent);
+        $strContent = str_replace('<ul id="' . $groupName . '" class="menu_level_1">', '<ul id="' . $groupName . '" class="menu_level_1">' . $strReturn,
+            $strContent);
 
         return $strContent;
     }

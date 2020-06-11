@@ -1,12 +1,14 @@
 # Contao-OM-Backend
 
+Made compatible with COntao 4.9
+
 ## Introduction
 
 Contao-OM-Backend is a module for the Open Source PHP Content Management System Contao. It was designed for admins and daily work.
 
 ## System requirements
 
-- Contao 4.4.x+
+- Contao 4.9.x+
 
 ## Installation
 
