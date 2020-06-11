@@ -1,6 +1,6 @@
 # Contao-OM-Backend
 
-Made compatible with COntao 4.9
+Made compatible with Contao 4.9
 
 ## Introduction
 
